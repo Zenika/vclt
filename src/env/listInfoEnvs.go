@@ -1,9 +1,9 @@
 // certificateManager
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/environment/listInfoEnvs.go
+// Original filename: src/env/listInfoEnvs.go
 // Original timestamp: 2023/09/13 16:01
 
-package environment
+package env
 
 import (
 	"fmt"
@@ -21,7 +21,7 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 	var dirFH *os.File
 	var finfo, fileInfos []os.FileInfo
 
-	// list environment files
+	// list env files
 	if envdir == "" {
 		envdir = filepath.Join(os.Getenv("HOME"), ".config", "JFG", "certificatemanager")
 	}
@@ -46,7 +46,7 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 		return ce
 	}
 
-	fmt.Printf("Number of environment files: %s\n", hf.Green(fmt.Sprintf("%d", len(finfo))))
+	fmt.Printf("Number of env files: %s\n", hf.Green(fmt.Sprintf("%d", len(finfo))))
 
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
@@ -68,7 +68,7 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 }
 
 func ExplainEnvFile(envfiles []string) *cerr.CustomError {
-	oldEnvFile := EnvConfigFile
+	oldEnvFile := EnvCfgFile
 
 	fmt.Println("Paths are relative to Certificate root dir's path")
 	t := table.NewWriter()
@@ -79,10 +79,10 @@ func ExplainEnvFile(envfiles []string) *cerr.CustomError {
 		if !strings.HasSuffix(envfile, ".json") {
 			envfile += ".json"
 		}
-		EnvConfigFile = envfile
+		EnvCfgFile = envfile
 
 		if e, err := LoadEnvironmentFile(); err != nil {
-			EnvConfigFile = oldEnvFile
+			EnvCfgFile = oldEnvFile
 			return err
 		} else {
 			t.AppendRow([]interface{}{hf.Green(envfile), hf.Green(e.CertificateRootDir), hf.Green(filepath.Base(e.RootCAdir)),
@@ -97,6 +97,6 @@ func ExplainEnvFile(envfiles []string) *cerr.CustomError {
 	t.Style().Format.Header = text.FormatDefault
 	t.Render()
 
-	EnvConfigFile = oldEnvFile
+	EnvCfgFile = oldEnvFile
 	return nil
 }

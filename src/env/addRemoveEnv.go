@@ -1,9 +1,9 @@
 // certificateManager
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/environment/addRemoveEnv.go
+// Original filename: src/env/addRemoveEnv.go
 // Original timestamp: 2023/09/15 08:23
 
-package environment
+package env
 
 import (
 	"fmt"

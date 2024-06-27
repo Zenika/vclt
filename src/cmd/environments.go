@@ -9,7 +9,7 @@ import (
 	"fmt"
 	cerr "github.com/jeanfrancoisgratton/customError"
 	"github.com/spf13/cobra"
-	environment "vclt/environment"
+	environment "vclt/env"
 )
 
 var envCmd = &cobra.Command{
@@ -24,7 +24,7 @@ var envListCmd = &cobra.Command{
 	Use:     "list",
 	Aliases: []string{"ls"},
 	Example: "cm env list [directory]",
-	Short:   "Lists all environment files",
+	Short:   "Lists all env files",
 	Run: func(cmd *cobra.Command, args []string) {
 		argument := ""
 		if len(args) > 0 {
@@ -40,7 +40,7 @@ var envRmCmd = &cobra.Command{
 	Use:     "rm",
 	Aliases: []string{"remove"},
 	Example: "cm env remove { FILE[.json] | defaultEnv.json }",
-	Short:   "Removes the environment FILE",
+	Short:   "Removes the env FILE",
 	Run: func(cmd *cobra.Command, args []string) {
 		fname := ""
 		if len(args) == 0 {
@@ -59,7 +59,7 @@ var envAddCmd = &cobra.Command{
 	Use:     "add",
 	Aliases: []string{"create"},
 	Example: "cm env add [FILE[.json]]",
-	Short:   "Adds the environment FILE",
+	Short:   "Adds the env FILE",
 	Long: `The extension (.json) is implied and will be added if missing. Moreover, not specifying a filename
 Will create a defaultEnv.json file, which is the application's default file.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -79,8 +79,8 @@ var envInfoCmd = &cobra.Command{
 	Use:     "info",
 	Aliases: []string{"explain"},
 	Example: "cm env info FILE1[.json] FILE2[.json]... FILEn[.json]",
-	Short:   "Prints the environment FILE[12n] information",
-	Long:    `You can list as many environment files as you wish, here`,
+	Short:   "Prints the env FILE[12n] information",
+	Long:    `You can list as many env files as you wish, here`,
 	Run: func(cmd *cobra.Command, args []string) {
 		envfiles := []string{"defaultEnv.json"}
 		if len(args) != 0 {

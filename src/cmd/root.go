@@ -9,7 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"runtime"
-	"vclt/environment"
+	"vclt/env"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -47,7 +47,7 @@ func init() {
 	envCmd.AddCommand(envAddCmd)
 	envCmd.AddCommand(envInfoCmd)
 
-	rootCmd.PersistentFlags().StringVarP(&environment.EnvConfigFile, "env", "e", "defaultEnv.json", "Default environment configuration file; this is a per-user setting.")
+	rootCmd.PersistentFlags().StringVarP(&env.EnvCfgFile, "env", "e", "defaultEnv.json", "Default env configuration file; this is a per-user setting.")
 }
 
 func changelog() {
