@@ -41,11 +41,6 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 		}
 	}
 
-	if err != nil {
-		ce := &cerr.CustomError{Title: "Undefined error", Message: err.Error()}
-		return ce
-	}
-
 	fmt.Printf("Number of env files: %s\n", hf.Green(fmt.Sprintf("%d", len(finfo))))
 
 	t := table.NewWriter()
