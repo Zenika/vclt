@@ -36,7 +36,7 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 	}
 
 	for _, info := range fileInfos {
-		if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") && !strings.HasPrefix(info.Name(), "sample") {
+		if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") {
 			finfo = append(finfo, info)
 		}
 	}
@@ -68,35 +68,35 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 }
 
 func ExplainEnvFile(envfiles []string) *cerr.CustomError {
-	oldEnvFile := EnvCfgFile
-
-	fmt.Println("Paths are relative to Certificate root dir's path")
-	t := table.NewWriter()
-	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"Environment file", "Certificate root dir", "CA dir", "Server certificates dir", "Certificates config dir"})
-
-	for _, envfile := range envfiles {
-		if !strings.HasSuffix(envfile, ".json") {
-			envfile += ".json"
-		}
-		EnvCfgFile = envfile
-
-		if e, err := LoadEnvironmentFile(); err != nil {
-			EnvCfgFile = oldEnvFile
-			return err
-		} else {
-			t.AppendRow([]interface{}{hf.Green(envfile), hf.Green(e.CertificateRootDir), hf.Green(filepath.Base(e.RootCAdir)),
-				hf.Green(filepath.Base(e.ServerCertsDir)), hf.Green(filepath.Base(e.CertificatesConfigDir))})
-		}
-
-	}
-	t.SortBy([]table.SortBy{
-		{Name: "Environment file", Mode: table.Asc},
-	})
-	t.SetStyle(table.StyleBold)
-	t.Style().Format.Header = text.FormatDefault
-	t.Render()
-
-	EnvCfgFile = oldEnvFile
+	//oldEnvFile := EnvCfgFile
+	//
+	//fmt.Println("Paths are relative to Certificate root dir's path")
+	//t := table.NewWriter()
+	//t.SetOutputMirror(os.Stdout)
+	//t.AppendHeader(table.Row{"Environment file", "Certificate root dir", "CA dir", "Server certificates dir", "Certificates config dir"})
+	//
+	//for _, envfile := range envfiles {
+	//	if !strings.HasSuffix(envfile, ".json") {
+	//		envfile += ".json"
+	//	}
+	//	EnvCfgFile = envfile
+	//
+	//	if e, err := LoadEnvironmentFile(); err != nil {
+	//		EnvCfgFile = oldEnvFile
+	//		return err
+	//	} else {
+	//		t.AppendRow([]interface{}{hf.Green(envfile), hf.Green(e.CertificateRootDir), hf.Green(filepath.Base(e.RootCAdir)),
+	//			hf.Green(filepath.Base(e.ServerCertsDir)), hf.Green(filepath.Base(e.CertificatesConfigDir))})
+	//	}
+	//
+	//}
+	//t.SortBy([]table.SortBy{
+	//	{Name: "Environment file", Mode: table.Asc},
+	//})
+	//t.SetStyle(table.StyleBold)
+	//t.Style().Format.Header = text.FormatDefault
+	//t.Render()
+	//
+	//EnvCfgFile = oldEnvFile
 	return nil
 }
