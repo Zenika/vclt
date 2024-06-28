@@ -47,7 +47,7 @@ func init() {
 	envCmd.AddCommand(envAddCmd)
 	envCmd.AddCommand(envInfoCmd)
 
-	rootCmd.PersistentFlags().StringVarP(&env.EnvCfgFile, "env", "e", "defaultEnv.json", "Default env configuration file; this is a per-user setting.")
+	rootCmd.PersistentFlags().StringVarP(&env.ConfigFile, "env", "e", "defaultEnv.json", "Default env configuration file; this is a per-user setting.")
 }
 
 func changelog() {

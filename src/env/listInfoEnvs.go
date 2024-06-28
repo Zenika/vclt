@@ -23,26 +23,26 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 
 	// list env files
 	if envdir == "" {
-		envdir = filepath.Join(os.Getenv("HOME"), ".config", "JFG", "certificatemanager")
+		envdir = filepath.Join(os.Getenv("HOME"), ".config", "JFG", "vclt")
 	}
 	if dirFH, err = os.Open(envdir); err != nil {
-		ce := &cerr.CustomError{Title: "Unable to read config directory", Fatality: cerr.Fatal}
+		ce := &cerr.CustomError{Title: "Unable to open config directory", Message: err.Error()}
 		return ce
 	}
 
 	if fileInfos, err = dirFH.Readdir(0); err != nil {
-		ce := &cerr.CustomError{Title: "Unable to read files in config directory", Fatality: cerr.Fatal}
+		ce := &cerr.CustomError{Title: "Unable to read files in config directory", Message: err.Error()}
 		return ce
 	}
 
 	for _, info := range fileInfos {
-		if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") && !strings.HasPrefix(info.Name(), "sample") {
+		if !info.IsDir() && strings.HasSuffix(info.Name(), ".json") {
 			finfo = append(finfo, info)
 		}
 	}
 
 	if err != nil {
-		ce := &cerr.CustomError{Title: "Undefined errot", Message: err.Error(), Fatality: cerr.Fatal}
+		ce := &cerr.CustomError{Title: "Undefined error", Message: err.Error()}
 		return ce
 	}
 
@@ -68,25 +68,26 @@ func ListEnvironments(envdir string) *cerr.CustomError {
 }
 
 func ExplainEnvFile(envfiles []string) *cerr.CustomError {
-	oldEnvFile := EnvCfgFile
+	oldEnvFile := ConfigFile
 
-	fmt.Println("Paths are relative to Certificate root dir's path")
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"Environment file", "Certificate root dir", "CA dir", "Server certificates dir", "Certificates config dir"})
+	t.AppendHeader(table.Row{"Environment file", "Env name", "Vault address", "Vault user", "Vault password",
+		"KV Path", "Comments"})
 
 	for _, envfile := range envfiles {
 		if !strings.HasSuffix(envfile, ".json") {
 			envfile += ".json"
 		}
-		EnvCfgFile = envfile
+		ConfigFile = envfile
 
 		if e, err := LoadEnvironmentFile(); err != nil {
-			EnvCfgFile = oldEnvFile
+			ConfigFile = oldEnvFile
 			return err
 		} else {
-			t.AppendRow([]interface{}{hf.Green(envfile), hf.Green(e.CertificateRootDir), hf.Green(filepath.Base(e.RootCAdir)),
-				hf.Green(filepath.Base(e.ServerCertsDir)), hf.Green(filepath.Base(e.CertificatesConfigDir))})
+			t.AppendRow([]interface{}{hf.Green(envfile), hf.Green(e.EnvironmentName), hf.Green(e.VaultAddress),
+				hf.Green(e.VaultUsername), hf.Yellow("*ENCRYPTED*"),
+				hf.Green(e.KeyValuePath), hf.Green(e.Comments)})
 		}
 
 	}
@@ -97,6 +98,6 @@ func ExplainEnvFile(envfiles []string) *cerr.CustomError {
 	t.Style().Format.Header = text.FormatDefault
 	t.Render()
 
-	EnvCfgFile = oldEnvFile
+	ConfigFile = oldEnvFile
 	return nil
 }
