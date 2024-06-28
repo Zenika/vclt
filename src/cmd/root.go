@@ -36,11 +36,10 @@ func Execute() {
 }
 
 func init() {
-
 	rootCmd.DisableAutoGenTag = true
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.AddCommand(clCmd)
-	rootCmd.AddCommand(envCmd)
+	rootCmd.AddCommand(envCmd, kvCmd)
 
 	envCmd.AddCommand(envListCmd)
 	envCmd.AddCommand(envRmCmd)
