@@ -15,13 +15,13 @@ import (
 
 var Quiet = false
 
-func Login() (*vault.Client, *cerr.CustomError) {
+func Login(showRes bool) (*vault.Client, string, *cerr.CustomError) {
 	var e env.EnvironmentStruct
 	var ce *cerr.CustomError
 
 	config := vault.DefaultConfig()
 	if e, ce = env.LoadEnvironmentFile(); ce != nil {
-		return nil, ce
+		return nil, "", ce
 	}
 
 	options := map[string]interface{}{
@@ -32,15 +32,17 @@ func Login() (*vault.Client, *cerr.CustomError) {
 	config.Address = e.VaultAddress
 	client, err := vault.NewClient(config)
 	if err != nil {
-		return nil, &cerr.CustomError{Title: "Failed to create Vault client:", Message: err.Error()}
+		return nil, "", &cerr.CustomError{Title: "Failed to create Vault client:", Message: err.Error()}
 	}
 
 	secret, err := client.Logical().Write(path, options)
 	if err != nil {
-		return nil, &cerr.CustomError{Title: "Failed to login", Message: err.Error()}
+		return nil, "", &cerr.CustomError{Title: "Failed to login", Message: err.Error()}
 	}
 
 	client.SetToken(secret.Auth.ClientToken)
-	fmt.Printf("Login %s\n", hf.Green("succeeded"))
-	return client, nil
+	if showRes {
+		fmt.Printf("Login %s\n", hf.Green("succeeded"))
+	}
+	return client, e.KeyValuePath, nil
 }

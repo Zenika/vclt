@@ -1,6 +1,6 @@
 // certificateManager
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename: src/cmd/environments.go
+// Original filename: src/cmd/envCommands.go
 // Original timestamp: 2023/09/15 13:40
 
 package cmd

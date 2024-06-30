@@ -34,7 +34,7 @@ var loginCmd = &cobra.Command{
 	Aliases: []string{"auth"},
 	Short:   "Login to Vault, using the userpass method",
 	Run: func(cmd *cobra.Command, args []string) {
-		if _, err := kv.Login(); err != nil {
+		if _, _, err := kv.Login(true); err != nil {
 			err.Error()
 		}
 	},
