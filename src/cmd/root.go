@@ -10,6 +10,7 @@ import (
 	"os"
 	"runtime"
 	"vclt/env"
+	"vclt/kv"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -28,6 +29,17 @@ var clCmd = &cobra.Command{
 	},
 }
 
+var loginCmd = &cobra.Command{
+	Use:     "login",
+	Aliases: []string{"auth"},
+	Short:   "Login to Vault, using the userpass method",
+	Run: func(cmd *cobra.Command, args []string) {
+		if _, err := kv.Login(); err != nil {
+			err.Error()
+		}
+	},
+}
+
 func Execute() {
 	err := rootCmd.Execute()
 	if err != nil {
@@ -39,12 +51,9 @@ func init() {
 	rootCmd.DisableAutoGenTag = true
 	rootCmd.CompletionOptions.DisableDefaultCmd = true
 	rootCmd.AddCommand(clCmd)
-	rootCmd.AddCommand(envCmd, kvCmd)
+	rootCmd.AddCommand(envCmd, kvCmd, loginCmd)
 
-	envCmd.AddCommand(envListCmd)
-	envCmd.AddCommand(envRmCmd)
-	envCmd.AddCommand(envAddCmd)
-	envCmd.AddCommand(envInfoCmd)
+	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd)
 
 	rootCmd.PersistentFlags().StringVarP(&env.ConfigFile, "env", "e", "defaultEnv.json", "Default env configuration file; this is a per-user setting.")
 }
