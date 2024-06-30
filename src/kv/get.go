@@ -4,6 +4,7 @@ import (
 	"fmt"
 	vault "github.com/hashicorp/vault/api"
 	cerr "github.com/jeanfrancoisgratton/customError"
+	"vclt/sys"
 )
 
 //func Get(key string) string {
@@ -11,8 +12,8 @@ import (
 
 func Get(entry string, field string, version int) (interface{}, *cerr.CustomError) {
 	var err error
-	client, kvPath, ce := Login(false)
-	isVersioned, ce := IsKVv2(client, kvPath)
+	client, kvPath, ce := sys.Login(false)
+	isVersioned, ce := sys.IsKVv2(client, kvPath)
 	if ce != nil {
 		return nil, ce
 	}

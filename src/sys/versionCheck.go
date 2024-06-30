@@ -1,9 +1,9 @@
 // vclt
 // Written by J.F. Gratton <jean-francois@famillegratton.net>
-// Original filename : helpers.go
+// Original filename : versionCheck.go
 // Original timestamp : 2024/06/30 15:36
 
-package kv
+package sys
 
 import (
 	"fmt"
