@@ -35,4 +35,6 @@ var kvGetCmd = &cobra.Command{
 
 func init() {
 	kvCmd.AddCommand(kvGetCmd)
+
+	kvCmd.PersistentFlags().BoolVarP(&kv.Quiet, "quiet", "q", false, "Only displays the value from the fetched value(s), defaults to FALSE")
 }

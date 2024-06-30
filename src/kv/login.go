@@ -13,6 +13,8 @@ import (
 	"vclt/env"
 )
 
+var Quiet = false
+
 func Login() (*vault.Client, *cerr.CustomError) {
 	var e env.EnvironmentStruct
 	var ce *cerr.CustomError

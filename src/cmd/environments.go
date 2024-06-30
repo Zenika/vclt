@@ -92,3 +92,7 @@ var envInfoCmd = &cobra.Command{
 		}
 	},
 }
+
+func init() {
+	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd)
+}

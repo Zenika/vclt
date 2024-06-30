@@ -53,8 +53,6 @@ func init() {
 	rootCmd.AddCommand(clCmd)
 	rootCmd.AddCommand(envCmd, kvCmd, loginCmd)
 
-	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd)
-
 	rootCmd.PersistentFlags().StringVarP(&env.ConfigFile, "env", "e", "defaultEnv.json", "Default env configuration file; this is a per-user setting.")
 }
 
