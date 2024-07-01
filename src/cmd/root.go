@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"runtime"
+	"time"
 	"vclt/env"
 	"vclt/sys"
 )
@@ -17,7 +18,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "vclt",
 	Short:   "Hashicorp Vault client",
-	Version: hf.White(fmt.Sprintf("1.00.00-0-%s (2024.06.27)", runtime.GOARCH)),
+	Version: hf.White(fmt.Sprintf("1.00.00-0-%s (%s)", runtime.GOARCH, time.Now().Format("2006.01.02"))),
 }
 
 var clCmd = &cobra.Command{
