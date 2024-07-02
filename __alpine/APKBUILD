@@ -1,5 +1,5 @@
-# Maintainer: J.F. Gratton<jean-francois@famillegratton.net>
-# Packager: APK/DEB/RPM package builder<builder@famillegratton.net>
+# Maintainer: J.F. Gratton <jean-francois@famillegratton.net>
+# Packager: APK/DEB/RPM package builder <builder@famillegratton.net>
 pkgname=vclt
 pkgver=1.00.00
 pkgrel=0
