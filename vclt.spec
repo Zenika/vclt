@@ -54,6 +54,10 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+* Tue Jul 02 2024 RPM Builder <builder@famillegratton.net> 1.01.00-0
+- Version bump pursuant previous commit (jean-francois@famillegratton.net)
+- Fixed some security vulns in dependencies (jean-francois@famillegratton.net)
+
 * Tue Jul 02 2024 RPM Builder <builder@famillegratton.net> 1.00.00-0
 - new package built with tito
 
