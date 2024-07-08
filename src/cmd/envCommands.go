@@ -9,6 +9,8 @@ import (
 	"fmt"
 	cerr "github.com/jeanfrancoisgratton/customError"
 	"github.com/spf13/cobra"
+	"os"
+	"vclt/env"
 	environment "vclt/env"
 )
 
@@ -56,8 +58,8 @@ var envRmCmd = &cobra.Command{
 }
 
 var envAddCmd = &cobra.Command{
-	Use:     "add",
-	Aliases: []string{"create"},
+	Use: "add",
+	//Aliases: []string{"create"},
 	Example: "cm env add [FILE[.json]]",
 	Short:   "Adds the env FILE",
 	Long: `The extension (.json) is implied and will be added if missing. Moreover, not specifying a filename
@@ -93,6 +95,39 @@ var envInfoCmd = &cobra.Command{
 	},
 }
 
+var envCreateCmd = &cobra.Command{
+	Use:     "create",
+	Example: "vclt env create FILE[.json] -n ENVIRONMENT_NAME -a VAULT_ADDRESS -u VAULT_USERNAME -p VAULT_PASSWORD -k KV_STORE_PATH -c COMMENTS",
+	Short:   "Creates a new env FILE using command line parameters",
+	Long: `This will create a new env FILE using command line parameters.
+The following parameters are mandatory (unless written otherwise),
+*after* you've provided a filename (no extension needed)' :
+-n EnvironmentName : the environment name
+-a VaultAddress : the Vault server address (ex: https://myvault.example.com:8200)
+-u VaultUserName : the Vault username; that is, who will be connect to the vault
+-p VaultPassword : the Vault username password
+-k KVstorePath : the kv engine path (name)
+(optional) -c Comments: says it all.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if len(args) == 0 {
+			fmt.Println("You must specify a file to create")
+			os.Exit(1)
+		}
+		var err *cerr.CustomError
+		if err = environment.CreateEnvFile(args[0]); err != nil {
+			fmt.Printf("%s", err.Error())
+		}
+	},
+}
+
 func init() {
-	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd)
+	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd, envCreateCmd)
+
+	//var EnvName, VaultAddress, VaultUserName, VaultPassword, KVstorePath, Comments string
+	envCreateCmd.PersistentFlags().StringVarP(&env.EnvName, "name", "n", "", "The new environment name")
+	envCreateCmd.PersistentFlags().StringVarP(&env.VAddress, "address", "a", "", "Your vault server address (ex: https://myvault.example.com:8200)")
+	envCreateCmd.PersistentFlags().StringVarP(&env.VUserName, "user", "u", "", "The new environment name")
+	envCreateCmd.PersistentFlags().StringVarP(&env.VPassword, "password", "p", "", "That user's password")
+	envCreateCmd.PersistentFlags().StringVarP(&env.KVstorePath, "kvstore", "k", "", "The KV engine name")
+	envCreateCmd.PersistentFlags().StringVarP(&env.EnvComments, "comments", "c", "", "Optional comments")
 }

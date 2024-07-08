@@ -15,6 +15,7 @@ import (
 )
 
 var ConfigFile string
+var EnvName, VAddress, VUserName, VPassword, KVstorePath, EnvComments string
 
 type EnvironmentStruct struct {
 	EnvironmentName string `json:"EnvironmentName"`
@@ -38,7 +39,7 @@ func LoadEnvironmentFile() (EnvironmentStruct, *cerr.CustomError) {
 	rcFile := filepath.Join(os.Getenv("HOME"), ".config", "JFG", "vclt", ConfigFile)
 	_, err := os.Stat(rcFile)
 	if os.IsNotExist(err) {
-		payload, ce = createEnvironmentFile(rcFile)
+		payload, ce = getEnvParams(rcFile)
 		if ce != nil {
 			return EnvironmentStruct{}, ce
 		}
@@ -83,8 +84,8 @@ func (e *EnvironmentStruct) SaveEnvironmentFile(outputfile string) *cerr.CustomE
 	return nil
 }
 
-// createEnvironmentFile : Prompts for values to fill up the Environment structure
-func createEnvironmentFile(cfgFile string) (EnvironmentStruct, *cerr.CustomError) {
+// getEnvParams : Prompts for values to fill up the Environment structure
+func getEnvParams(cfgFile string) (EnvironmentStruct, *cerr.CustomError) {
 	es := EnvironmentStruct{}
 
 	es.EnvironmentName = hf.GetStringValFromPrompt("Enter the name of this environment : ")

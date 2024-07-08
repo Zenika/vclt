@@ -30,7 +30,7 @@ func AddEnvFile(envfile string) *cerr.CustomError {
 		envfile += ".json"
 	}
 
-	if env, err := createEnvironmentFile(envfile); err != nil {
+	if env, err := getEnvParams(envfile); err != nil {
 		return err
 	} else {
 		es := &env
