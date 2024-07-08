@@ -3,7 +3,7 @@ all:
 	CGO_ENABLED=0 go build . -o ./vclt.exe
 
 prepare:
-	sudo /opt/bin/install_golang.sh 1.22.4 amd64
+	sudo /opt/bin/install_golang.sh 1.22.5 amd64
 	sudo apk update --no-cache
 
 install:

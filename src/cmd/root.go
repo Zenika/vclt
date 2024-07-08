@@ -18,7 +18,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:     "vclt",
 	Short:   "Hashicorp Vault client",
-	Version: hf.White(fmt.Sprintf("1.01.00-1-%s (%s)", runtime.GOARCH, time.Now().Format("2006.01.02"))),
+	Version: hf.White(fmt.Sprintf("1.02.00-0-%s (%s)", runtime.GOARCH, time.Now().Format("2006.01.02"))),
 }
 
 var clCmd = &cobra.Command{
@@ -68,6 +68,7 @@ func changelog() {
 	fmt.Print(`
 VERSION		DATE			COMMENT
 -------		----			-------
+1.02.00		2024.07.08		Added env create, to create new environment files from the CLI, updated to GO 1.22.5
 1.01.00		2024.07.02		Completed kv get, kv lse, kv lsf
 1.00.00		2024.06.27		Initial version
 \n`)
