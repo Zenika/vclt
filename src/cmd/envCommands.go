@@ -18,7 +18,7 @@ var envCmd = &cobra.Command{
 	Use:   "env",
 	Short: "Environment sub-command",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Valid subcommands are: { list | add | remove }")
+		fmt.Println("Valid subcommands are: { list | add | remove | createrootkeys }")
 	},
 }
 
@@ -120,8 +120,21 @@ The following parameters are mandatory (unless written otherwise),
 	},
 }
 
+var envCreateRootKeysCmd = &cobra.Command{
+	Use:     "createrootkeys",
+	Example: "vclt env createrootkeys",
+	Aliases: []string{"crk"},
+	Short:   "Creates a file containing the root keys needed to unseal a Vault",
+	Long:    `This file will be named rootkeys.json, in $HOME/.config/JFG/vclt. The entries will be encoded`,
+	Run: func(cmd *cobra.Command, args []string) {
+		if err := environment.CreateRootKeys(3); err != nil {
+			fmt.Printf("%s", err.Error())
+		}
+	},
+}
+
 func init() {
-	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd, envCreateCmd)
+	envCmd.AddCommand(envListCmd, envRmCmd, envAddCmd, envInfoCmd, envCreateCmd, envCreateRootKeysCmd)
 
 	//var EnvName, VaultAddress, VaultUserName, VaultPassword, KVstorePath, Comments string
 	envCreateCmd.PersistentFlags().StringVarP(&env.EnvName, "name", "n", "", "The new environment name")
