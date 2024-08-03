@@ -9,16 +9,16 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"runtime"
-	"time"
 	"vclt/env"
 	"vclt/sys"
 )
+
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "vclt",
 	Short:   "Hashicorp Vault client",
-	Version: hf.White(fmt.Sprintf("1.02.00-0-%s (%s)", runtime.GOARCH, time.Now().Format("2006.01.02"))),
+	Version: hf.White(fmt.Sprintf("1.02.00-0-%s (2024.08.02)", runtime.GOARCH)),
 }
 
 var clCmd = &cobra.Command{
