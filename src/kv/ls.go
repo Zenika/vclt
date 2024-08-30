@@ -53,6 +53,9 @@ func ListFields(entry string, version int) (map[string]interface{}, *cerr.Custom
 func ListEntries() ([]string, *cerr.CustomError) {
 	var err error
 	client, kvPath, ce := sys.Login(false)
+	if ce != nil {
+		return nil, ce
+	}
 	isVersioned, ce := sys.IsKVv2(client, kvPath)
 	if ce != nil {
 		return nil, ce

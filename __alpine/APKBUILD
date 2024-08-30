@@ -1,7 +1,7 @@
 # Maintainer: J.F. Gratton <jean-francois@famillegratton.net>
 # Packager: APK/DEB/RPM package builder <builder@famillegratton.net>
 pkgname=vclt
-pkgver=1.02.00
+pkgver=1.03.00
 pkgrel=0
 pkgdir=/data/packages
 builddir="$startdir/src/BUILD"
@@ -25,5 +25,3 @@ build() {
 package() {
         make -f "$startdir"/Makefile BUILDDIR="$builddir" PREFIX=/opt PKGNM="$binaryname" DESTDIR="$pkgdir" install
 }
-
-

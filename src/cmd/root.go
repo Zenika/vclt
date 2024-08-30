@@ -13,12 +13,11 @@ import (
 	"vclt/sys"
 )
 
-
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:     "vclt",
 	Short:   "Hashicorp Vault client",
-	Version: hf.White(fmt.Sprintf("1.02.00-0-%s (2024.08.02)", runtime.GOARCH)),
+	Version: hf.White(fmt.Sprintf("1.03.00-0-%s (2024.08.30)", runtime.GOARCH)),
 }
 
 var clCmd = &cobra.Command{
@@ -68,6 +67,7 @@ func changelog() {
 	fmt.Print(`
 VERSION		DATE			COMMENT
 -------		----			-------
+1.03.00		2024.08.30		Handling a previously unhandled error in kv.ListEntries(), updated buildDeps
 1.02.00		2024.07.08		Added env create, to create new environment files from the CLI, updated to GO 1.22.5
 1.01.00		2024.07.02		Completed kv get, kv lse, kv lsf
 1.00.00		2024.06.27		Initial version

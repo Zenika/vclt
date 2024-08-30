@@ -1,5 +1,5 @@
 Package: vclt
-Version: 1.02.00-0
+Version: 1.03.00-0
 Architecture: amd64
 Maintainer: J.F. Gratton<jean-francois@famillegratton.net>
 Description: Hashicorp Vault client
