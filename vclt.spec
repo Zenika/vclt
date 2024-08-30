@@ -54,6 +54,7 @@ install -Dpm 0755 %{_sourcedir}/%{_binaryname} %{buildroot}%{_bindir}/%{_binaryn
 
 
 %changelog
+
 * Wed Jul 03 2024 RPM Builder <builder@famillegratton.net> 1.01.00-1
 - Version bump as -v was not being correctly displayed (jean-
   francois@famillegratton.net)
